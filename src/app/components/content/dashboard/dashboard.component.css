@@ -1,1 +1,1 @@
-#dashboard{display:grid;grid-template-columns:repeat(1fr);place-content:center;height:100vh}
+#dashboard{display:grid;place-content:center;height:70vh}

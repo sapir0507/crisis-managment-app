@@ -1,5 +1,4 @@
-<p>crisis-table works!</p>
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 center">
     <table mat-table matSort (matSortChange)="announceSortChange($event)" [dataSource]="dataSource">
   
       <!-- Id Column -->
@@ -34,7 +33,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   
-    <mat-paginator [pageSizeOptions]="[6]"
+    <mat-paginator [pageSizeOptions]="[10]"
                    showFirstLastButtons
                    aria-label="Select page of periodic elements">
     </mat-paginator>

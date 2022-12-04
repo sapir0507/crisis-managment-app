@@ -1,7 +1,11 @@
-<div class="navbar" *ngFor="let buttons of navbar">
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="NavigateTo(buttons.path)" 
-      >{{buttons.name}}</button> 
+<div class="title full-height">
+  <div>
+    <h2 class="title">Crisis Managment</h2>
+  </div>
+  <div class="navbar" *ngFor="let buttons of navbar">
+      <app-my-button 
+        [path]="buttons.path" 
+        [name]="buttons.name">
+      </app-my-button>
+  </div>
 </div>

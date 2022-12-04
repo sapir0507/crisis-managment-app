@@ -1,1 +1,1 @@
-table{width:100%}.Low{color:#ff0}.Medium{color:orange}.Critical{color:red}
+.center{display:grid;grid-template-columns:1fr;place-content:center}table{width:90vh}.Low{color:#ff0}.Medium{color:orange}.Critical{color:red}

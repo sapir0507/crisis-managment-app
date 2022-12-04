@@ -1,5 +1,12 @@
+.center {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+ 
+}
+
 table {
-    width: 100%;
+    width: 90vh;
   }
 
   .Low{

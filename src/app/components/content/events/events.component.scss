@@ -1,8 +1,6 @@
 #events{
     display: grid;
-    grid-template-columns: repeat(1fr);
     place-content: center;
-    max-width: 170vh;
-    height: 80vh;
-    background-color: beige;
+    height: 70vh;
+    width: 106vh;
 }
