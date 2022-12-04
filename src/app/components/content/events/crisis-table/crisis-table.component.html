@@ -1,1 +1,42 @@
 <p>crisis-table works!</p>
+<div class="mat-elevation-z8">
+    <table mat-table matSort (matSortChange)="announceSortChange($event)" [dataSource]="dataSource">
+  
+      <!-- Id Column -->
+      <!-- <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container> -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element; let i=index;"> {{ i + 1 }} </td>
+      </ng-container>
+  
+      <!-- Created Date Column -->
+      <ng-container matColumnDef="createdDate">
+        <th mat-header-cell *matHeaderCellDef> Created Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.createdDate}} </td>
+      </ng-container>
+  
+      <!-- Severity Column -->
+      <ng-container matColumnDef="severity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> Severity </th>
+        <td mat-cell *matCellDef="let element"> {{element.severity === 1 ? "Low": element.severity===2? "Medium": "Critical"}} </td>
+      </ng-container>
+  
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status? "Open": "Close"}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[6]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+  
