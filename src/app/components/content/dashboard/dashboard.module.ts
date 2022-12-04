@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    HighchartsChartModule
   ]
 })
 export class DashboardModule { }
