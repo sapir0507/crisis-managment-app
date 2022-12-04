@@ -2,18 +2,8 @@
 <h1>hello from app component</h1>
 
 <hr>
-<div class="navbar">
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="NavigateTo('/dashboard')" 
-      >Dashboard</button> |
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="NavigateTo('/events')">
-      Events</button> 
-</div>
+
 <main>
   <router-outlet></router-outlet>
+  <app-side-menu></app-side-menu>
 </main>

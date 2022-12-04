@@ -1,11 +1,8 @@
-
-div.navbar {
-    display: block;
-    margin: 20px auto;
-    padding: 1em;
-    button {
-        margin: 0 2em;
-    }
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .example-label {

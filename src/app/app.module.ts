@@ -1,3 +1,4 @@
+import { SideMenuModule } from './components/side-menu/side-menu.module';
 import { MaterialModule } from './modules/material.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    SideMenuModule,
     MaterialModule,
   ],
   providers: [],

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
@@ -18,7 +18,7 @@ export interface PeriodicElement {
   templateUrl: './crisis-table.component.html',
   styleUrls: ['./crisis-table.component.scss']
 })
-export class CrisisTableComponent {
+export class CrisisTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'createdDate', 'severity', 'status'];
   SortDirection : 'asc' | 'desc' | '' = "desc";
   constantIdsForTable: number[] = [] ;
@@ -30,7 +30,10 @@ export class CrisisTableComponent {
 
   
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private cd: ChangeDetectorRef
+    ) {}
 
   @ViewChild(MatSort)
   sort!: MatSort;
@@ -40,8 +43,9 @@ export class CrisisTableComponent {
     this.dataSource.paginator = this.paginator;
     this.sort.active = "severity";
     this.sort.direction = this.SortDirection;
-    this.sort.disabled=true;
+    this.sort.disabled = true;
     this.dataSource.sort = this.sort;
+    this.cd.detectChanges()
    
     for (let i = 0; i < ELEMENT_DATA.length; i++) {
       this.constantIdsForTable.push(i);
@@ -57,6 +61,20 @@ export class CrisisTableComponent {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  getClass(class_id: number):string{
+    switch (class_id) {
+      case 1:
+        return "Low"
+      case 2:
+        return "Medium"
+      case 3:
+        return "Critical"
+      default:
+        return ""
+        break;
     }
   }
 }

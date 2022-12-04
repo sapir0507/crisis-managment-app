@@ -1,0 +1,7 @@
+<div class="navbar" *ngFor="let buttons of navbar">
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="NavigateTo(buttons.path)" 
+      >{{buttons.name}}</button> 
+</div>

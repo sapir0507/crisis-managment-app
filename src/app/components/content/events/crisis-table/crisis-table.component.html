@@ -21,7 +21,7 @@
       <!-- Severity Column -->
       <ng-container matColumnDef="severity">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> Severity </th>
-        <td mat-cell *matCellDef="let element"> {{element.severity === 1 ? "Low": element.severity===2? "Medium": "Critical"}} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="getClass(element.severity)" > {{element.severity === 1 ? "Low": element.severity===2? "Medium": "Critical"}} </td>
       </ng-container>
   
       <!-- Status Column -->
