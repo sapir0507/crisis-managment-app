@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
 import * as Highcharts from 'highcharts';
+const More = require('highcharts/highcharts-more');
+const Exporting = require('highcharts/modules/exporting');
+const ExportData = require('highcharts/modules/export-data');
+const Accessibility = require('highcharts/modules/accessibility');
+
+More(Highcharts);
+Exporting(Highcharts);
+ExportData(Highcharts);
+Accessibility(Highcharts);
 
 @Component({
   selector: 'app-pie-chart',
@@ -10,6 +19,10 @@ export class PieChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
 
   ngOnInit(){
+    // this.options.series = this.options.series.map((object: any)=>{
+    //   console.log(object.data);
+    //   return object
+    // })
     Highcharts.chart('container', this.options);
   }
 
@@ -38,40 +51,13 @@ export class PieChartComponent {
   }
 
   title: Highcharts.TitleOptions = {
-    text: ""
+    text: "crisis managment"
   }
 
   tooltip: Highcharts.TooltipOptions = {
-    pointFormat: '{series.name}: <b>{point.precentage.lf}%</b>'
+    pointFormat: '{series.name}: {point.percentage:.1f}%'
   }
-
-  // chartOptions: Highcharts.Options = {
-  //   series: [{
-  //     name: 'Brands',
-  //     colorByPoint: true,
-  //     data: [{
-  //         name: 'Chrome',
-  //         y: 74.77,
-  //         sliced: true,
-  //         selected: true
-  //     },  {
-  //         name: 'Edge',
-  //         y: 12.82
-  //     },  {
-  //         name: 'Firefox',
-  //         y: 4.63
-  //     }, {
-  //         name: 'Safari',
-  //         y: 2.44
-  //     }, {
-  //         name: 'Internet Explorer',
-  //         y: 2.02
-  //     }, {
-  //         name: 'Other',
-  //         y:3.28
-  //       }]
-  //   }]
-  // };
+  
   public options: any = {
    chart: this.chart,
    title: this.title,
@@ -83,7 +69,7 @@ export class PieChartComponent {
     colorByPoint: true,
     data: [{
         name: 'Chrome',
-        y: 59.41,
+        y: 60.0,
         sliced: true,
         selected: true
     }, {
@@ -106,7 +92,7 @@ export class PieChartComponent {
         y: 1.6
     }, {
         name: 'QQ',
-        y: 1.2
+        y: 1.0
     }, {
         name: 'Other',
         y: 2.61
