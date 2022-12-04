@@ -1,11 +1,19 @@
+
 <h1>hello from app component</h1>
 
-<a href="/dashboard">link to dashboard</a> |
-<a href="/events">link to content view</a>
 <hr>
 <div class="navbar">
-    <button mat-raised-button color="primary" (click)="NavigateTo('/dashboard')" >Dashboard</button> |
-    <button mat-raised-button color="primary" (click)="NavigateTo('/events')">Events</button> 
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="NavigateTo('/dashboard')" 
+      >Dashboard</button> |
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="NavigateTo('/events')">
+      Events</button> 
 </div>
-
-<router-outlet></router-outlet>
+<main>
+  <router-outlet></router-outlet>
+</main>
