@@ -1,12 +1,10 @@
+import { MatTableDataSource } from '@angular/material/table';
 import { ICrisis } from './../../../../services/crisis.interface';
 import { UtilsService } from './../../../../services/utils.service';
 import { Component, AfterViewInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import { PeriodicElement } from './db/Ielement.data';
-import {ELEMENT_DATA} from './db/element.data';
 
 
 @Component({
@@ -19,10 +17,8 @@ export class CrisisTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'createdDate', 'severity', 'status'];
   SortDirection : 'asc' | 'desc' | '' = "desc";
   constantIdsForTable: number[] = [] ;
-
   crisis_elements: ICrisis[] = []
-
-  dataSource : any;
+  dataSource!: MatTableDataSource<ICrisis>;
 
   
   @ViewChild(MatPaginator) 
@@ -49,9 +45,7 @@ export class CrisisTableComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     this.cd.detectChanges()
    
-    for (let i = 0; i < ELEMENT_DATA.length; i++) {
-      this.constantIdsForTable.push(i);
-    }
+   
   }
 
   announceSortChange(sortState: Sort) {
