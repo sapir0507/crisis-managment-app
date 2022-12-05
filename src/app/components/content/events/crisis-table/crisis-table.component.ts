@@ -1,4 +1,6 @@
-import { Component, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ICrisis } from './../../../../services/crisis.interface';
+import { UtilsService } from './../../../../services/utils.service';
+import { Component, AfterViewInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
@@ -10,13 +12,17 @@ import {ELEMENT_DATA} from './db/element.data';
 @Component({
   selector: 'app-crisis-table',
   templateUrl: './crisis-table.component.html',
-  styleUrls: ['./crisis-table.component.scss']
+  styleUrls: ['./crisis-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CrisisTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'createdDate', 'severity', 'status'];
   SortDirection : 'asc' | 'desc' | '' = "desc";
   constantIdsForTable: number[] = [] ;
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+
+  crisis_elements: ICrisis[] = []
+
+  dataSource : any;
 
   
   @ViewChild(MatPaginator) 
@@ -26,14 +32,16 @@ export class CrisisTableComponent implements AfterViewInit {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private crisis_service: UtilsService
     ) {}
 
   @ViewChild(MatSort)
   sort!: MatSort;
-  
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    this.crisis_elements = await this.crisis_service.get_all_crisis();
+    this.dataSource = new MatTableDataSource<ICrisis>(this.crisis_elements);
     this.dataSource.paginator = this.paginator;
     this.sort.active = "severity";
     this.sort.direction = this.SortDirection;
@@ -47,10 +55,6 @@ export class CrisisTableComponent implements AfterViewInit {
   }
 
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
