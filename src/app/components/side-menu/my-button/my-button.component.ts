@@ -13,7 +13,6 @@ export class MyButtonComponent {
   constructor(private router:Router){}
 
   NavigateTo():void{
-    console.log([`${this.path}`]);
     this.router.navigate([`${this.path}`]);
   }
 }
