@@ -1,11 +1,13 @@
 import { ICrisis } from './../../../../services/crisis.interface';
 import { UtilsService } from './../../../../services/utils.service';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 const More = require('highcharts/highcharts-more');
 const Exporting = require('highcharts/modules/exporting');
 const ExportData = require('highcharts/modules/export-data');
 const Accessibility = require('highcharts/modules/accessibility');
+import { Options } from "highcharts";
+
 
 More(Highcharts);
 Exporting(Highcharts);
@@ -28,6 +30,10 @@ export interface DataItem {
 })
 export class PieChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
+  @ViewChild("chart") componentRef: any;
+  chartRef: any;
+  updateFlag:boolean = true;
+
   DB: ICrisis[] | null = null
 
   constructor(
@@ -43,7 +49,8 @@ export class PieChartComponent {
     this.dataItems[1].y = this.DB.filter((item)=>{return item.severity===2}).length;
     this.dataItems[2].y = this.DB.filter((item)=>{return item.severity===3}).length;
     
-    Highcharts.chart('container', this.options);
+    this.redrawChart()
+    Highcharts.chart('container', this.chartOptions);
   }
 
   dataItems: DataItem[] = [{
@@ -66,52 +73,33 @@ export class PieChartComponent {
     color: "yellow"
   }];
 
-  chart: Highcharts.ChartOptions = {
-    plotBackgroundColor: undefined,
-    plotBorderWidth: undefined,
-    plotShadow: false,
-    type: 'pie'
-  }
-
-  accessibility: Highcharts.AccessibilityOptions = {
-    point: {
-      valueSuffix: '%'
-    }
-  }
-
-  plotOptions: Highcharts.PlotOptions = {
-    pie:{
+  chartOptions: Options = {
+    title:{
+      text: "crisis managment"
+    },
+    series: [{
+      data: this.dataItems,
+      type: "pie",
+      cursor: "pointer",
+      showInLegend: true,
+      dataLabels: {enabled: false},
       allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels:{
-        enabled:false
-      },
-      
-      showInLegend:true
-    }
+      keys: ['name', 'y', 'sliced', 'selected', 'color'],
+      colorByPoint: true,
+    }]
   }
 
-  title: Highcharts.TitleOptions = {
-    text: "crisis managment"
+  chartCallback: Highcharts.ChartCallbackFunction = chart => {
+    this.chartRef = chart;
+  };
+
+  redrawChart(): void {
+    this.chartRef.destroy();
+    this.componentRef.chart = null;
+    this.chartOptions = this.chartOptions;
+    this.updateFlag = true;
   }
 
-  tooltip: Highcharts.TooltipOptions = {
-    pointFormat: '{series.name}: {point.percentage:.1f}%'
-  }
-  
-  public options: any = {
-   chart: this.chart,
-   title: this.title,
-   tooltip: this.tooltip,
-   accessibility: this.accessibility,
-   plotOptions: this.plotOptions,
-   series: [{
-    name: 'Brands',
-    colorByPoint: true,
-    keys: ['name', 'y', 'sliced', 'selected', 'color'],
-    data: this.dataItems
-   }]
-  }
 }
 
 

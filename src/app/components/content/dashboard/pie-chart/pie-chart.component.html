@@ -1,8 +1,10 @@
 <highcharts-chart 
+#chart
 id="container"
 [Highcharts]="Highcharts"
-[options]="options"
-[title]="title"
-
+[options]="chartOptions"
+[callbackFunction]="chartCallback"
+[(update)]="updateFlag"
 style="width: 100vh; height: 75vh; padding: 2em; display: block;"
 ></highcharts-chart>
+<button (click)="redrawChart()">Redraw</button>
