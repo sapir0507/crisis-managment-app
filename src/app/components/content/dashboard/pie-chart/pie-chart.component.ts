@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ICrisis } from './../../../../services/crisis.interface';
+import { UtilsService } from './../../../../services/utils.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import * as Highcharts from 'highcharts';
 const More = require('highcharts/highcharts-more');
 const Exporting = require('highcharts/modules/exporting');
@@ -13,13 +15,25 @@ Accessibility(Highcharts);
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+  styleUrls: ['./pie-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PieChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
+  DB: ICrisis[] | null = null
 
-  ngOnInit(){
+  constructor(
+    private crisisService: UtilsService
+    ){}
+
+    
+
+  async ngOnInit(){
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.   
    
+    this.DB = await this.crisisService.get_all_crisis()
+    console.log(this.DB);
+
     var crisis_counter:number, low_counter:number, medium_counter:number;
 
     low_counter = ELEMENT_DATA.filter((item)=>{return item.severity===1}).length
