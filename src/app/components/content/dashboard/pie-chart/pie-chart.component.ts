@@ -1,5 +1,3 @@
-import { ICrisis } from './../../../../services/crisis.interface';
-import { UtilsService } from './../../../../services/utils.service';
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 const More = require('highcharts/highcharts-more');
@@ -7,6 +5,8 @@ const Exporting = require('highcharts/modules/exporting');
 const ExportData = require('highcharts/modules/export-data');
 const Accessibility = require('highcharts/modules/accessibility');
 import { Options } from "highcharts";
+import { ICrisis } from './../../../../services/crisis.interface';
+import { UtilsService } from './../../../../services/utils.service';
 
 
 More(Highcharts);
