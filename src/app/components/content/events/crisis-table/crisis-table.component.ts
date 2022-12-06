@@ -60,7 +60,7 @@ export class CrisisTableComponent implements AfterViewInit {
     switch (class_id) {
       case crisis_type.Low:
         return "Low"
-      case crisis_type.Meduim:
+      case crisis_type.Medium:
         return "Medium"
       case crisis_type.Critical:
         return "Critical"

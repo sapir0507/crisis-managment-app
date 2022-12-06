@@ -16,7 +16,12 @@ export class UtilsService {
   //add rxjs
   private _get_all_crisis = async() => {
     const res = await axios.get(this.url).then((res)=>{
-      return res
+      if(res.status === 200)
+        return res
+      else{
+        console.log(res.status, res.statusText, res.data);
+        return {data:[]}
+      }
     })
     return res.data
   }

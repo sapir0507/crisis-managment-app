@@ -32,6 +32,7 @@ export interface DataItem {
 })
 export class PieChartComponent {
   Highcharts: typeof Highcharts = Highcharts;
+  //Property decorator that configures a view query. The change detector looks for the first element or the directive matching the selector in the view DOM. If the view DOM changes, and a new child matches the selector, the property is updated.
   @ViewChild("chart") componentRef: any;
   chartRef: any;
   updateFlag:boolean = true;
@@ -39,27 +40,40 @@ export class PieChartComponent {
   DB: ICrisis[] | null = null
 
   constructor(
+    // injecting a depandancy 
     private crisisService: UtilsService
     ){}
 
   async ngOnInit(){
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.   
+    //Called after the constructor, 
+    //initializing input properties, and the first call to ngOnChanges.   
+    //This is where we get access to ViewChild elements
+    //we can initialize them, and thus effect the view DOM 
    
     this.DB = await this.crisisService.get_all_crisis()
     
     //change number to enum
-    this.dataItems[0].y = this.DB.filter((item)=>{
-      return item.severity===crisis_type.Critical && item.status===status_type.Open
-    }).length;
-    this.dataItems[1].y = this.DB.filter((item)=>{
-      return item.severity===crisis_type.Meduim && item.status===status_type.Open
-    }).length;
-    this.dataItems[2].y = this.DB.filter((item)=>{
-      return item.severity===crisis_type.Low && item.status===status_type.Open
-    }).length;
+    this.dataItems.map((item)=>{
+      if(!this.DB)
+        return item
+      else
+        item.y = this.DB.filter((db_item)=>db_item.status===status_type.Open)
+                        .filter((db_item)=>{
+                            switch (item.name) {
+                              case "Critical":
+                                return db_item.severity===crisis_type.Critical
+                              case "Medium": 
+                                return db_item.severity===crisis_type.Medium
+                              case "Low":
+                                return db_item.severity===crisis_type.Low
+                            }
+                            return false
+                        }).length                      
+      return item
+    })
     
-    this.redrawChart()
-    Highcharts.chart('container', this.chartOptions);
+    this.redrawChart() // makes sure to delete the highchart if exsists, since it doesn't do that automatically
+    Highcharts.chart('container', this.chartOptions); 
   }
 
   dataItems: DataItem[] = [{
