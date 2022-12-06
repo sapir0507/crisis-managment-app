@@ -1,11 +1,12 @@
+import { status_type } from 'src/app/enum/status_type.enum';
 import { MatTableDataSource } from '@angular/material/table';
-import { ICrisis } from './../../../../services/crisis.interface';
+import { ICrisis } from 'src/app/interfaces/crisis.interface';
 import { UtilsService } from './../../../../services/utils.service';
 import { Component, AfterViewInit, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, Sort} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-
+import { crisis_type } from 'src/app/enum/crisis_type.enum';
 
 @Component({
   selector: 'app-crisis-table',
@@ -44,8 +45,7 @@ export class CrisisTableComponent implements AfterViewInit {
     this.sort.disabled = true;
     this.dataSource.sort = this.sort;
     this.cd.detectChanges()
-   
-   
+    //catches changes that happen after randering 
   }
 
   announceSortChange(sortState: Sort) {
@@ -56,14 +56,25 @@ export class CrisisTableComponent implements AfterViewInit {
     }
   }
 
-  getClass(class_id: number):string{
+  getCrisisName(class_id: number):string{
     switch (class_id) {
-      case 1:
+      case crisis_type.Low:
         return "Low"
-      case 2:
+      case crisis_type.Meduim:
         return "Medium"
-      case 3:
+      case crisis_type.Critical:
         return "Critical"
+      default:
+        return ""
+        break;
+    }
+  }
+  getStatusName(status_id: number){
+    switch (status_id) {
+      case status_type.Open:
+        return "Open"
+        case status_type.Close:
+          return "Close"
       default:
         return ""
         break;

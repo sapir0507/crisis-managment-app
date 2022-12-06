@@ -5,9 +5,10 @@ const Exporting = require('highcharts/modules/exporting');
 const ExportData = require('highcharts/modules/export-data');
 const Accessibility = require('highcharts/modules/accessibility');
 import { Options } from "highcharts";
-import { ICrisis } from './../../../../services/crisis.interface';
-import { UtilsService } from './../../../../services/utils.service';
-
+import { crisis_type } from 'src/app/enum/crisis_type.enum';
+import { status_type } from 'src/app/enum/status_type.enum';
+import { ICrisis } from 'src/app/interfaces/crisis.interface';
+import { UtilsService } from 'src/app/services/utils.service';
 
 More(Highcharts);
 Exporting(Highcharts);
@@ -21,6 +22,7 @@ export interface DataItem {
   selected?: boolean
   color?: string
 }
+
 
 @Component({
   selector: 'app-pie-chart',
@@ -45,28 +47,35 @@ export class PieChartComponent {
    
     this.DB = await this.crisisService.get_all_crisis()
     
-    this.dataItems[0].y = this.DB.filter((item)=>{return item.severity===1}).length;
-    this.dataItems[1].y = this.DB.filter((item)=>{return item.severity===2}).length;
-    this.dataItems[2].y = this.DB.filter((item)=>{return item.severity===3}).length;
+    //change number to enum
+    this.dataItems[0].y = this.DB.filter((item)=>{
+      return item.severity===crisis_type.Critical && item.status===status_type.Open
+    }).length;
+    this.dataItems[1].y = this.DB.filter((item)=>{
+      return item.severity===crisis_type.Meduim && item.status===status_type.Open
+    }).length;
+    this.dataItems[2].y = this.DB.filter((item)=>{
+      return item.severity===crisis_type.Low && item.status===status_type.Open
+    }).length;
     
     this.redrawChart()
     Highcharts.chart('container', this.chartOptions);
   }
 
   dataItems: DataItem[] = [{
-    name: "Critical",
+    name: "Critical", //3
     y: 60.0,
     sliced: true,
     selected: true,
     color: "red"
   }, {
-    name: "Medium",
+    name: "Medium",//2
     y: 20.0,
     sliced: false,
     selected: false,
     color: "orange"
   }, {
-    name: "Low",
+    name: "Low",//1
     y: 20.0,
     sliced: false,
     selected: false,

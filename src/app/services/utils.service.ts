@@ -1,4 +1,4 @@
-import { ICrisis } from './crisis.interface';
+import { ICrisis } from '../interfaces/crisis.interface';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import axios from 'axios';
@@ -12,7 +12,8 @@ export class UtilsService {
   private readonly url = environment.api + 'crisis';
 
   constructor() { }
-
+  //add handle errors
+  //add rxjs
   private _get_all_crisis = async() => {
     const res = await axios.get(this.url).then((res)=>{
       return res
